@@ -1,0 +1,33 @@
+# CODEOWNERS file for KhazarLLMs
+# 
+# This file defines the individuals or teams responsible for code in this repository.
+# When a pull request modifies files, the code owners are automatically requested for review.
+#
+# More info: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Global owner - owns everything unless a later match takes precedence
+* @NickScherbakov
+
+# Core Agent System
+/khazar_llms/agents/ @NickScherbakov
+
+# Orchestration Engine
+/khazar_llms/orchestration/ @NickScherbakov
+
+# LLM Client and Utilities
+/khazar_llms/utils/ @NickScherbakov
+
+# Tests - require review for any test changes
+/tests/ @NickScherbakov
+
+# Documentation - anyone can propose changes, but needs review
+/docs/ @NickScherbakov
+*.md @NickScherbakov
+
+# Configuration files - require careful review
+pyproject.toml @NickScherbakov
+requirements.txt @NickScherbakov
+.github/ @NickScherbakov
+
+# Examples - more lenient, can be updated by contributors
+/examples/ @NickScherbakov

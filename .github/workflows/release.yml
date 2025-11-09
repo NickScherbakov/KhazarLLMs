@@ -1,0 +1,68 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-and-release:
+    name: Build and Create Release
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install build twine
+        pip install -r requirements.txt
+    
+    - name: Run tests
+      run: |
+        pip install pytest pytest-asyncio
+        pytest tests/
+    
+    - name: Build package
+      run: python -m build
+    
+    - name: Extract release notes
+      id: extract-release-notes
+      run: |
+        VERSION=${GITHUB_REF#refs/tags/v}
+        echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+    
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ steps.extract-release-notes.outputs.VERSION }}
+        body: |
+          ## KhazarLLMs Release ${{ steps.extract-release-notes.outputs.VERSION }}
+          
+          ### Changes
+          See [CHANGELOG.md](https://github.com/NickScherbakov/KhazarLLMs/blob/main/CHANGELOG.md) for details.
+          
+          ### Installation
+          ```bash
+          pip install khazar-llms==${{ steps.extract-release-notes.outputs.VERSION }}
+          ```
+        draft: false
+        prerelease: false
+    
+    - name: Publish to PyPI
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+      run: |
+        python -m twine upload dist/*
+      continue-on-error: true
