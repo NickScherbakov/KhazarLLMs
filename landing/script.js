@@ -2,7 +2,8 @@
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
-hamburger.addEventListener('click', () => {
+if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
     navMenu.classList.toggle('active');
     
     // Animate hamburger
@@ -16,18 +17,19 @@ hamburger.addEventListener('click', () => {
         spans[1].style.opacity = '1';
         spans[2].style.transform = '';
     }
-});
+    });
 
-// Close menu when clicking on a link
-navMenu.querySelectorAll('a').forEach(link => {
+    // Close menu when clicking on a link
+    navMenu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
         navMenu.classList.remove('active');
         const spans = hamburger.querySelectorAll('span');
         spans[0].style.transform = '';
         spans[1].style.opacity = '1';
         spans[2].style.transform = '';
+        });
     });
-});
+}
 
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -51,6 +53,9 @@ const tabContents = document.querySelectorAll('.tab-content');
 tabButtons.forEach(button => {
     button.addEventListener('click', () => {
         const tabId = button.getAttribute('data-tab');
+        const targetContent = document.getElementById(tabId);
+        
+        if (!targetContent) return;
         
         // Remove active class from all buttons and contents
         tabButtons.forEach(btn => btn.classList.remove('active'));
@@ -58,7 +63,7 @@ tabButtons.forEach(button => {
         
         // Add active class to clicked button and corresponding content
         button.classList.add('active');
-        document.getElementById(tabId).classList.add('active');
+        targetContent.classList.add('active');
     });
 });
 
@@ -209,10 +214,15 @@ document.querySelectorAll('.stat').forEach(stat => {
 const gradientText = document.querySelector('.gradient-text');
 if (gradientText) {
     let hue = 0;
-    setInterval(() => {
+    let animationFrame;
+    
+    const animate = () => {
         hue = (hue + 1) % 360;
         gradientText.style.filter = `hue-rotate(${hue}deg)`;
-    }, 50);
+        animationFrame = requestAnimationFrame(animate);
+    };
+    
+    animate();
 }
 
 // Easter egg: Konami code

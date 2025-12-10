@@ -45,10 +45,18 @@ body {
     left: 0;
     right: 0;
     background: rgba(15, 23, 42, 0.95);
+    background: var(--bg-dark);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
     padding: 1rem 0;
     z-index: 1000;
+}
+
+@supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) {
+    .navbar {
+        background: rgba(15, 23, 42, 0.95);
+    }
 }
 
 .navbar .container {
