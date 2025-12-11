@@ -2,6 +2,8 @@
 
 **A System for Collective Creativity Management of Ensemble LLMs**
 
+> 🌐 **[View Landing Page](landing/index.html)** | 📚 **[Documentation](docs/)** | 💻 **[Examples](examples/)**
+
 Inspired by Milorad Pavić's *Khazar Dictionary* and its exploration of multiple perspectives, KhazarLLMs orchestrates an ensemble of AI agents with distinct personalities and roles to collaborate on creative tasks. Like the polyphonic structure of the Khazar Dictionary, where multiple voices tell interconnected stories, this system brings together diverse AI perspectives to explore ideas from many angles.
 
 ## 🎭 Philosophy
@@ -162,6 +164,26 @@ Contributions are welcome! This project is an experiment in collective AI creati
 - Improve the conversation dynamics
 - Add visualization tools
 - Create new examples
+
+See our [Contributing Guide](CONTRIBUTING.md) for more details.
+
+## 🌐 Landing Page
+
+A professional landing page for this project is available in the `landing/` directory. To view it:
+
+```bash
+# Open directly in browser
+open landing/index.html
+
+# Or serve with a local server
+cd landing
+python -m http.server 8000
+# Visit http://localhost:8000
+```
+
+### Deploy Landing Page
+
+You can deploy the landing page to GitHub Pages, Netlify, or Vercel. See [landing/README.md](landing/README.md) for deployment instructions.
 
 ## 📜 License
 

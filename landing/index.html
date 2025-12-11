@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KhazarLLMs - Система коллективного творчества AI-агентов. Inspired by Milorad Pavić's Khazar Dictionary">
+    <meta name="keywords" content="AI, LLM, ensemble, creative AI, multi-agent system, OpenAI, Anthropic">
+    <title>KhazarLLMs - Ансамбль AI для Коллективного Творчества</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">🌟 KhazarLLMs</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#features">Возможности</a></li>
+                <li><a href="#agents">Агенты</a></li>
+                <li><a href="#examples">Примеры</a></li>
+                <li><a href="#contribute">Контрибьют</a></li>
+                <li><a href="https://github.com/NickScherbakov/KhazarLLMs" target="_blank" class="btn-github">GitHub</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">Коллективное Творчество</span>
+                    <br>Ансамбля AI-Агентов
+                </h1>
+                <p class="hero-subtitle">
+                    Вдохновлено «Хазарским словарем» Милорада Павича, где истина рождается из множества голосов. 
+                    KhazarLLMs объединяет AI-агентов с уникальными личностями для решения творческих задач.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#quickstart" class="btn btn-primary">Начать работу</a>
+                    <a href="https://github.com/NickScherbakov/KhazarLLMs" target="_blank" class="btn btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        View on GitHub
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">AI-агентов</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">Режима работы</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">LLM провайдера</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="philosophy">
+        <div class="container">
+            <div class="section-header">
+                <h2>Философия Проекта</h2>
+                <p>Как в Хазарском словаре, где правда появляется из пересечения многих голосов</p>
+            </div>
+            <div class="philosophy-content">
+                <div class="philosophy-quote">
+                    <svg class="quote-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" fill="currentColor"/>
+                    </svg>
+                    <blockquote>
+                        "Хазары — народ, исчезнувший из истории, оставив лишь фрагменты и противоречивые свидетельства. 
+                        Из этих фрагментов мы можем вообразить бесконечное число историй. Точно так же из различных 
+                        AI-перспектив рождаются бесконечные творческие возможности."
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Ключевые Возможности</h2>
+                <p>Мощный инструмент для коллективного AI-творчества</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Множество Персон</h3>
+                    <p>7 уникальных AI-агентов с различными ролями: Мечтатель, Критик, Синтезатор, Философ, Бунтарь, Архитектор и Поэт</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Гибкая Оркестрация</h3>
+                    <p>Последовательный, параллельный, дебаты и консенсус - выбирайте режим взаимодействия агентов</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Итеративная Разработка</h3>
+                    <p>Множественные раунды обсуждений для глубокой проработки идей</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3>Управление Сессиями</h3>
+                    <p>Сохраняйте и анализируйте творческие сессии для последующего использования</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Provider Agnostic</h3>
+                    <p>Работа с OpenAI, Anthropic или mock-режим для экспериментов без затрат</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛠️</div>
+                    <h3>CLI & Python API</h3>
+                    <p>Используйте через командную строку или интегрируйте в свой код</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agents Section -->
+    <section id="agents" class="agents">
+        <div class="container">
+            <div class="section-header">
+                <h2>Познакомьтесь с AI-Агентами</h2>
+                <p>Каждый агент обладает уникальной личностью и творческой ролью</p>
+            </div>
+            <div class="agents-grid">
+                <div class="agent-card">
+                    <div class="agent-icon">💭</div>
+                    <h3>Мечтатель</h3>
+                    <div class="agent-temp">Temperature: 0.95</div>
+                    <p>Генерирует смелые, необузданные творческие видения без ограничений</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-icon">🔍</div>
+                    <h3>Критик</h3>
+                    <div class="agent-temp">Temperature: 0.4</div>
+                    <p>Анализирует с острым взглядом и конструктивными замечаниями</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-icon">🔗</div>
+                    <h3>Синтезатор</h3>
+                    <div class="agent-temp">Temperature: 0.7</div>
+                    <p>Объединяет разрозненные идеи в связное целое</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-icon">🧠</div>
+                    <h3>Философ</h3>
+                    <div class="agent-temp">Temperature: 0.6</div>
+                    <p>Исследует глубинные смыслы и более широкий контекст</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-icon">⚡</div>
+                    <h3>Бунтарь</h3>
+                    <div class="agent-temp">Temperature: 0.9</div>
+                    <p>Бросает вызов допущениям и нарушает конвенции</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-icon">🏛️</div>
+                    <h3>Архитектор</h3>
+                    <div class="agent-temp">Temperature: 0.5</div>
+                    <p>Структурирует и организует идеи в реализуемые формы</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-icon">✨</div>
+                    <h3>Поэт</h3>
+                    <div class="agent-temp">Temperature: 0.85</div>
+                    <p>Добавляет красоту и эмоциональный резонанс</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section id="quickstart" class="quickstart">
+        <div class="container">
+            <div class="section-header">
+                <h2>Быстрый Старт</h2>
+                <p>Начните использовать KhazarLLMs за несколько минут</p>
+            </div>
+            <div class="quickstart-content">
+                <div class="code-tabs">
+                    <button class="tab-btn active" data-tab="install">Установка</button>
+                    <button class="tab-btn" data-tab="python">Python API</button>
+                    <button class="tab-btn" data-tab="cli">CLI</button>
+                </div>
+                <div class="tab-content active" id="install">
+                    <pre><code># Клонируйте репозиторий
+git clone https://github.com/NickScherbakov/KhazarLLMs.git
+cd KhazarLLMs
+
+# Установите зависимости
+pip install -r requirements.txt
+
+# Опционально: настройте API ключи
+cp .env.example .env
+# Отредактируйте .env с вашими API ключами</code></pre>
+                </div>
+                <div class="tab-content" id="python">
+                    <pre><code>import asyncio
+from khazar_llms.agents.personas import DreamerAgent, CriticAgent, SynthesizerAgent
+from khazar_llms.orchestration.ensemble import Ensemble
+from khazar_llms.orchestration.session import CreativeSession
+
+async def main():
+    # Создайте агентов
+    agents = [
+        DreamerAgent(provider="mock"),
+        CriticAgent(provider="mock"),
+        SynthesizerAgent(provider="mock"),
+    ]
+    
+    # Создайте ансамбль
+    ensemble = Ensemble(agents=agents, max_iterations=3)
+    
+    # Запустите творческую сессию
+    session = CreativeSession(ensemble)
+    results = await session.run("Design a new form of communication")
+    
+    # Просмотрите результаты
+    for msg in results["conversation"]:
+        print(f"{msg.sender}: {msg.content}")
+
+asyncio.run(main())</code></pre>
+                </div>
+                <div class="tab-content" id="cli">
+                    <pre><code># Получите помощь
+python -m khazar_llms.cli info
+
+# Список доступных агентов
+python -m khazar_llms.cli list-agents
+
+# Запустите творческую задачу
+python -m khazar_llms.cli create-task "Imagine a library that exists in multiple dimensions"
+
+# Используйте параллельный режим
+python -m khazar_llms.cli --mode parallel --agents dreamer rebel poet create-task "Create a new musical instrument"</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section id="examples" class="examples">
+        <div class="container">
+            <div class="section-header">
+                <h2>Примеры Использования</h2>
+                <p>Реальные сценарии применения KhazarLLMs</p>
+            </div>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">✍️</div>
+                    <h3>Креативное Письмо</h3>
+                    <p>Генерируйте истории с множественных нарративных перспектив</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">🎨</div>
+                    <h3>Дизайн Продуктов</h3>
+                    <p>Исследуйте идеи продуктов через разные линзы восприятия</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">🧩</div>
+                    <h3>Решение Проблем</h3>
+                    <p>Подходите к сложным проблемам с разных углов</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">🎭</div>
+                    <h3>Искусство и Поэзия</h3>
+                    <p>Создавайте многослойные художественные работы</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">🤔</div>
+                    <h3>Философия</h3>
+                    <p>Исследуйте философские вопросы через диалог</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">📚</div>
+                    <h3>Образование</h3>
+                    <p>Изучайте темы, видя множество объяснительных подходов</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contribute Section -->
+    <section id="contribute" class="contribute">
+        <div class="container">
+            <div class="section-header">
+                <h2>Присоединяйтесь к Проекту</h2>
+                <p>Станьте частью сообщества исследователей коллективного AI-творчества</p>
+            </div>
+            <div class="contribute-content">
+                <div class="contribute-grid">
+                    <div class="contribute-card">
+                        <div class="contribute-number">01</div>
+                        <h3>Добавьте Новых Агентов</h3>
+                        <p>Создайте уникальные AI-персоны с новыми творческими ролями и особенностями</p>
+                    </div>
+                    <div class="contribute-card">
+                        <div class="contribute-number">02</div>
+                        <h3>Реализуйте Режимы</h3>
+                        <p>Разработайте новые паттерны оркестрации и взаимодействия агентов</p>
+                    </div>
+                    <div class="contribute-card">
+                        <div class="contribute-number">03</div>
+                        <h3>Улучшите Динамику</h3>
+                        <p>Оптимизируйте диалоги и взаимодействие между агентами</p>
+                    </div>
+                    <div class="contribute-card">
+                        <div class="contribute-number">04</div>
+                        <h3>Создайте Визуализацию</h3>
+                        <p>Разработайте инструменты для визуализации творческих процессов</p>
+                    </div>
+                    <div class="contribute-card">
+                        <div class="contribute-number">05</div>
+                        <h3>Напишите Примеры</h3>
+                        <p>Добавьте новые примеры использования для разных доменов</p>
+                    </div>
+                    <div class="contribute-card">
+                        <div class="contribute-number">06</div>
+                        <h3>Документируйте</h3>
+                        <p>Улучшайте документацию, переводите на другие языки</p>
+                    </div>
+                </div>
+                <div class="contribute-cta">
+                    <h3>Начните Контрибьютить Прямо Сейчас!</h3>
+                    <p>Прочитайте наш CONTRIBUTING.md гайд и создайте первый Pull Request</p>
+                    <div class="contribute-buttons">
+                        <a href="https://github.com/NickScherbakov/KhazarLLMs/blob/main/CONTRIBUTING.md" target="_blank" class="btn btn-primary">Contributing Guide</a>
+                        <a href="https://github.com/NickScherbakov/KhazarLLMs/issues" target="_blank" class="btn btn-secondary">View Issues</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Готовы Исследовать Коллективное AI-Творчество?</h2>
+                <p>Присоединяйтесь к сообществу разработчиков, использующих ансамбли AI для создания чего-то нового</p>
+                <div class="cta-buttons">
+                    <a href="https://github.com/NickScherbakov/KhazarLLMs" target="_blank" class="btn btn-primary btn-large">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        Star on GitHub
+                    </a>
+                    <a href="https://github.com/NickScherbakov/KhazarLLMs/fork" target="_blank" class="btn btn-secondary btn-large">Fork Repository</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">🌟 KhazarLLMs</div>
+                    <p>Система коллективного творчества AI-агентов</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Проект</h4>
+                        <ul>
+                            <li><a href="https://github.com/NickScherbakov/KhazarLLMs">GitHub</a></li>
+                            <li><a href="https://github.com/NickScherbakov/KhazarLLMs/blob/main/README.md">Документация</a></li>
+                            <li><a href="https://github.com/NickScherbakov/KhazarLLMs/blob/main/CONTRIBUTING.md">Контрибьют</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Ресурсы</h4>
+                        <ul>
+                            <li><a href="https://github.com/NickScherbakov/KhazarLLMs/tree/main/examples">Примеры</a></li>
+                            <li><a href="https://github.com/NickScherbakov/KhazarLLMs/tree/main/docs">Архитектура</a></li>
+                            <li><a href="https://github.com/NickScherbakov/KhazarLLMs/blob/main/LICENSE">Лицензия</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Сообщество</h4>
+                        <ul>
+                            <li><a href="https://github.com/NickScherbakov/KhazarLLMs/issues">Issues</a></li>
+                            <li><a href="https://github.com/NickScherbakov/KhazarLLMs/pulls">Pull Requests</a></li>
+                            <li><a href="https://github.com/NickScherbakov/KhazarLLMs/discussions">Discussions</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 KhazarLLMs. Вдохновлено «Хазарским словарем» Милорада Павича.</p>
+                <p>MIT License - Открытый исходный код</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
