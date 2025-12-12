@@ -4,9 +4,11 @@
 
 **A System for Collective Creativity Management of Ensemble LLMs**
 
-> 🌐 **[View Landing Page](docs/index.html)** | 📚 **[Documentation](USAGE_GUIDE.md)** | 💻 **[Examples](examples/)**
+> 🌐 **[View Landing Page](docs/index.html)** | 📜 **[Read the Manifesto](MANIFESTO.md)** | 📚 **[Documentation](USAGE_GUIDE.md)** | 💻 **[Examples](examples/)**
 
 Inspired by Milorad Pavić's *Khazar Dictionary* and its exploration of multiple perspectives, KhazarLLMs orchestrates an ensemble of AI agents with distinct personalities and roles to collaborate on creative tasks. Like the polyphonic structure of the Khazar Dictionary, where multiple voices tell interconnected stories, this system brings together diverse AI perspectives to explore ideas from many angles.
+
+> 📜 **New!** Read our **[Manifesto](MANIFESTO.md)** — *A declaration of collective intelligence and the future of AI collaboration*
 
 ## 🎭 Philosophy
 
