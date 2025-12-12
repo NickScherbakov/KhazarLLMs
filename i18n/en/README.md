@@ -1,10 +1,10 @@
 # KhazarLLMs 🌟
 
-> 🌐 **Languages:** [English](README.md) | [العربية](i18n/ar/README.md) | [中文](i18n/zh/README.md) | [Русский](i18n/ru/README.md)
+> 🌐 **Languages:** [English](README.md) | [العربية](../ar/README.md) | [中文](../zh/README.md) | [Русский](../ru/README.md)
 
 **A System for Collective Creativity Management of Ensemble LLMs**
 
-> 🌐 **[View Landing Page](docs/index.html)** | 📚 **[Documentation](USAGE_GUIDE.md)** | 💻 **[Examples](examples/)**
+> 🌐 **[View Landing Page](../../docs/index.html)** | 📚 **[Documentation](../../USAGE_GUIDE.md)** | 💻 **[Examples](../../examples/)**
 
 Inspired by Milorad Pavić's *Khazar Dictionary* and its exploration of multiple perspectives, KhazarLLMs orchestrates an ensemble of AI agents with distinct personalities and roles to collaborate on creative tasks. Like the polyphonic structure of the Khazar Dictionary, where multiple voices tell interconnected stories, this system brings together diverse AI perspectives to explore ideas from many angles.
 
