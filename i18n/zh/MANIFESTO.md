@@ -21,4 +21,4 @@
 
 ---
 
-> 📜 **完整英文版：** [../../MANIFESTO.md](../../MANIFESTO.md)
+> 📜 **完整英文版：** [MANIFESTO.md](https://github.com/NickScherbakov/KhazarLLMs/blob/main/MANIFESTO.md)

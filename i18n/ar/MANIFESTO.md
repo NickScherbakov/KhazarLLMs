@@ -21,4 +21,4 @@
 
 ---
 
-> 📜 **للنسخة الإنجليزية الكاملة:** [../../MANIFESTO.md](../../MANIFESTO.md)
+> 📜 **للنسخة الإنجليزية الكاملة:** [MANIFESTO.md](https://github.com/NickScherbakov/KhazarLLMs/blob/main/MANIFESTO.md)
