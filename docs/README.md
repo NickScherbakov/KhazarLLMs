@@ -17,7 +17,7 @@
 ## 📁 Структура
 
 ```
-landing/
+docs/
 ├── index.html      # Основная HTML страница
 ├── styles.css      # Стили и дизайн
 ├── script.js       # JavaScript функциональность
@@ -44,10 +44,10 @@ landing/
 
 ```bash
 # Из корня проекта
-open landing/index.html
+open docs/index.html
 
 # Или используйте локальный сервер (рекомендуется)
-cd landing
+cd docs
 python -m http.server 8000
 # Откройте http://localhost:8000 в браузере
 ```
@@ -57,19 +57,19 @@ python -m http.server 8000
 #### GitHub Pages
 
 1. Перейдите в Settings репозитория
-2. В разделе Pages выберите источник: `main` branch, `/landing` folder
+2. В разделе Pages выберите источник: `main` branch, `/docs` folder
 3. Сохраните - сайт будет доступен по адресу `https://nickscherbakov.github.io/KhazarLLMs/`
 
 #### Netlify
 
 1. Войдите на netlify.com
-2. Drag & drop папку `landing` в Netlify
+2. Drag & drop папку `docs` в Netlify
 3. Сайт будет автоматически развернут
 
 #### Vercel
 
 ```bash
-cd landing
+cd docs
 vercel deploy
 ```
 
