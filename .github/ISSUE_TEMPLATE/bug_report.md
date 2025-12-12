@@ -6,6 +6,13 @@ labels: bug
 assignees: ''
 ---
 
+<!-- 
+🌐 You can write this bug report in: English, العربية, 中文, or Русский
+🌐 Вы можете написать этот отчет об ошибке на: English, العربية, 中文, или Русский
+🌐 您可以用以下语言编写此错误报告: English, العربية, 中文, 或 Русский
+🌐 يمكنك كتابة تقرير الخطأ هذا باللغة: English, العربية, 中文, أو Русский
+-->
+
 ## Bug Description
 A clear and concise description of what the bug is.
 

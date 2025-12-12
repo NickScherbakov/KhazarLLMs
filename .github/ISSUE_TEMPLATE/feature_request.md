@@ -6,6 +6,13 @@ labels: enhancement
 assignees: ''
 ---
 
+<!-- 
+🌐 You can write this feature request in: English, العربية, 中文, or Русский
+🌐 Вы можете написать этот запрос функции на: English, العربية, 中文, или Русский
+🌐 您可以用以下语言编写此功能请求: English, العربية, 中文, 或 Русский
+🌐 يمكنك كتابة طلب الميزة هذا باللغة: English, العربية, 中文, أو Русский
+-->
+
 ## Feature Description
 A clear and concise description of the feature you'd like to see.
 

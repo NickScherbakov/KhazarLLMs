@@ -1,3 +1,13 @@
+<!-- 
+🌐 Language / Язык / 语言 / اللغة:
+- [English](#english-version)
+- [Русский](#russian-version) 
+- [中文](#chinese-version)
+- [العربية](#arabic-version)
+-->
+
+## English Version
+
 ## Description
 <!-- Provide a clear and concise description of your changes -->
 

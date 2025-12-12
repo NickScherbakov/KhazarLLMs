@@ -1,7 +1,5 @@
 # KhazarLLMs 🌟
 
-> 🌐 **Languages:** [English](README.md) | [العربية](i18n/ar/README.md) | [中文](i18n/zh/README.md) | [Русский](i18n/ru/README.md)
-
 **A System for Collective Creativity Management of Ensemble LLMs**
 
 > 🌐 **[View Landing Page](docs/index.html)** | 📚 **[Documentation](USAGE_GUIDE.md)** | 💻 **[Examples](examples/)**

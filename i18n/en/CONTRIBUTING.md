@@ -1,6 +1,6 @@
 # Contributing to KhazarLLMs
 
-> 🌐 **Languages:** [English](CONTRIBUTING.md) | [العربية](i18n/ar/CONTRIBUTING.md) | [中文](i18n/zh/CONTRIBUTING.md) | [Русский](i18n/ru/CONTRIBUTING.md)
+> 🌐 **Languages:** [English](../../CONTRIBUTING.md) | [العربية](../ar/CONTRIBUTING.md) | [中文](../zh/CONTRIBUTING.md) | [Русский](../ru/CONTRIBUTING.md)
 
 Thank you for your interest in contributing to KhazarLLMs! This project explores the creative potential of ensemble AI systems, and we welcome contributions that expand this vision.
 
