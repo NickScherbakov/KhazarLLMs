@@ -104,9 +104,9 @@ def create_parser():
 
     parser.add_argument(
         "--format",
-        choices=["terminal", "markdown", "html"],
+        choices=["terminal", "markdown", "html", "json"],
         default="terminal",
-        help="Output format for theatre mode (default: terminal)",
+        help="Output format (default: terminal)",
     )
 
     parser.add_argument(
