@@ -44,7 +44,7 @@ def create_parser():
 
     parser.add_argument(
         "command",
-        choices=["create-task", "list-agents", "info"],
+        choices=["create-task", "list-agents", "info", "benchmark"],
         help="Command to execute",
     )
 
@@ -119,6 +119,25 @@ def create_parser():
         "--no-color",
         action="store_true",
         help="Disable color output in theatre mode",
+    )
+
+    # Benchmark-specific arguments
+    parser.add_argument(
+        "--full",
+        action="store_true",
+        help="Run full benchmark suite (for benchmark command)",
+    )
+
+    parser.add_argument(
+        "--category",
+        type=str,
+        help="Run benchmark for specific category (for benchmark command)",
+    )
+
+    parser.add_argument(
+        "--prompt",
+        type=str,
+        help="Run benchmark on single custom prompt (for benchmark command)",
     )
 
     return parser
@@ -274,6 +293,84 @@ async def run_creative_task(args):
         print("=" * 80 + "\n")
 
 
+async def run_benchmark(args):
+    """Run benchmark evaluation."""
+    from .benchmark import BenchmarkRunner
+    from .benchmark.test_cases import get_categories
+    
+    # Create agents
+    agents = []
+    for agent_name in args.agents:
+        agent_class = AVAILABLE_AGENTS[agent_name]
+        agents.append(agent_class(provider=args.provider))
+
+    # Create ensemble
+    mode = ConversationMode(args.mode)
+    ensemble = Ensemble(
+        agents=agents,
+        mode=mode,
+        max_iterations=args.iterations,
+    )
+
+    # Create benchmark runner
+    runner = BenchmarkRunner(ensemble)
+
+    # Print header
+    print("\n" + "=" * 80)
+    print("KHAZAR LLMs BENCHMARK")
+    print("=" * 80)
+    print(f"\nAgents ({len(agents)}):")
+    for agent in agents:
+        print(f"  - {agent.name} ({agent.role.value})")
+    print(f"\nMode: {mode.value}")
+    print(f"Iterations: {args.iterations}")
+    print(f"Provider: {args.provider}")
+
+    # Determine what to run
+    if args.full:
+        print("\nRunning full benchmark suite...")
+        print("=" * 80 + "\n")
+        report = await runner.run(iterations=args.iterations)
+    elif args.category:
+        print(f"\nRunning benchmark for category: {args.category}")
+        print("=" * 80 + "\n")
+        report = await runner.run(categories=[args.category], iterations=args.iterations)
+    elif args.prompt:
+        print(f"\nRunning benchmark on custom prompt: {args.prompt}")
+        print("=" * 80 + "\n")
+        report = await runner.run_single(args.prompt, category="custom")
+    else:
+        print("\nError: Must specify --full, --category, or --prompt")
+        print("Available categories:", ", ".join(get_categories()))
+        return
+
+    # Print summary
+    runner.print_summary(report)
+
+    # Save report if output specified
+    if args.output:
+        # Determine format
+        output_format = args.format
+        if args.format == "terminal":
+            # Auto-detect from file extension
+            ext = args.output.suffix.lower()
+            if ext == ".md":
+                output_format = "markdown"
+            elif ext == ".json":
+                output_format = "json"
+            elif ext == ".html":
+                output_format = "html"
+            else:
+                output_format = "markdown"  # Default
+        
+        # Ensure output directory exists
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Save report
+        saved_path = runner.save_report(report, args.output, format=output_format)
+        print(f"✨ Benchmark report saved to: {saved_path}\n")
+
+
 def main():
     """Main CLI entry point."""
     parser = create_parser()
@@ -285,6 +382,8 @@ def main():
         show_info()
     elif args.command == "create-task":
         asyncio.run(run_creative_task(args))
+    elif args.command == "benchmark":
+        asyncio.run(run_benchmark(args))
 
 
 if __name__ == "__main__":
