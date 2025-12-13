@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://khazarllms.org/schemas/message.schema.json",
+  "title": "KPS Message Schema",
+  "description": "Khazar Protocol Specification - Message Format",
+  "type": "object",
+  "required": ["message_id", "session_id", "timestamp", "sender", "content", "metadata"],
+  "properties": {
+    "message_id": {
+      "type": "string",
+      "description": "Unique identifier for this message",
+      "format": "uuid"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Reference to parent session",
+      "format": "uuid"
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "ISO 8601 timestamp with timezone",
+      "format": "date-time"
+    },
+    "sender": {
+      "type": "object",
+      "required": ["agent_id", "persona_name"],
+      "properties": {
+        "agent_id": {
+          "type": "string",
+          "description": "Sending agent's identifier"
+        },
+        "persona_name": {
+          "type": "string",
+          "description": "Human-readable persona name"
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "required": ["text"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The message content"
+        },
+        "format": {
+          "type": "string",
+          "description": "Content format",
+          "enum": ["plain", "markdown", "structured"],
+          "default": "plain"
+        },
+        "language": {
+          "type": "string",
+          "description": "ISO 639-1 language code",
+          "pattern": "^[a-z]{2}$",
+          "default": "en"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["round", "turn", "mode"],
+      "properties": {
+        "round": {
+          "type": "integer",
+          "description": "Round number (starting from 0)",
+          "minimum": 0
+        },
+        "turn": {
+          "type": "integer",
+          "description": "Turn within round (starting from 0)",
+          "minimum": 0
+        },
+        "mode": {
+          "type": "string",
+          "description": "Orchestration mode",
+          "enum": ["sequential", "parallel", "debate", "consensus"]
+        },
+        "responding_to": {
+          "type": "array",
+          "description": "Message IDs being responded to",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "stage_direction": {
+          "type": ["string", "null"],
+          "description": "Narrative context"
+        }
+      }
+    },
+    "annotations": {
+      "type": "object",
+      "properties": {
+        "sentiment": {
+          "type": "string",
+          "description": "Message sentiment",
+          "enum": ["positive", "negative", "neutral"]
+        },
+        "intent": {
+          "type": "string",
+          "description": "Message intent",
+          "enum": [
+            "propose",
+            "challenge",
+            "support",
+            "synthesize",
+            "question",
+            "redirect",
+            "conclude",
+            "acknowledge"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "description": "Confidence score",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    }
+  }
+}

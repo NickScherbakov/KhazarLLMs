@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://khazarllms.org/schemas/session.schema.json",
+  "title": "KPS Session Schema",
+  "description": "Khazar Protocol Specification - Session Configuration",
+  "type": "object",
+  "required": ["session_id", "prompt", "state", "config", "participants", "created_at"],
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "Unique session identifier",
+      "format": "uuid"
+    },
+    "prompt": {
+      "type": "string",
+      "description": "The creative task or question",
+      "minLength": 1
+    },
+    "state": {
+      "type": "string",
+      "description": "Current session state",
+      "enum": [
+        "INITIALIZED",
+        "ACTIVE",
+        "PAUSED",
+        "RESUMED",
+        "SYNTHESIZING",
+        "COMPLETED",
+        "TERMINATED"
+      ]
+    },
+    "config": {
+      "type": "object",
+      "required": ["mode", "max_rounds", "synthesis_strategy"],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "description": "Orchestration mode",
+          "enum": ["sequential", "parallel", "debate", "consensus"]
+        },
+        "max_rounds": {
+          "type": "integer",
+          "description": "Maximum number of rounds",
+          "minimum": 1
+        },
+        "max_tokens_per_turn": {
+          "type": "integer",
+          "description": "Token limit per message",
+          "minimum": 1
+        },
+        "synthesis_strategy": {
+          "type": "string",
+          "description": "How to synthesize results",
+          "enum": ["final_agent", "voting", "merge", "iterative"]
+        },
+        "consensus_threshold": {
+          "type": "number",
+          "description": "Required agreement level (0.0-1.0)",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "description": "Maximum session duration in seconds",
+          "minimum": 1
+        }
+      }
+    },
+    "participants": {
+      "type": "array",
+      "description": "List of agent IDs",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "created_at": {
+      "type": "string",
+      "description": "ISO 8601 timestamp",
+      "format": "date-time"
+    },
+    "started_at": {
+      "type": ["string", "null"],
+      "description": "When session became active",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": ["string", "null"],
+      "description": "When session ended",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional data",
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "creator": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

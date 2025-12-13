@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://khazarllms.org/schemas/agent.schema.json",
+  "title": "KPS Agent Schema",
+  "description": "Khazar Protocol Specification - Agent Identity and Persona",
+  "type": "object",
+  "required": ["agent_id", "persona", "capabilities", "provider"],
+  "properties": {
+    "agent_id": {
+      "type": "string",
+      "description": "Unique identifier for this agent instance",
+      "pattern": "^[a-zA-Z0-9_-]+$"
+    },
+    "persona": {
+      "type": "object",
+      "required": ["name", "archetype", "system_prompt"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the agent"
+        },
+        "archetype": {
+          "type": "string",
+          "description": "Standard or custom archetype identifier",
+          "enum": [
+            "creative_visionary",
+            "analytical_challenger",
+            "integrative_harmonizer",
+            "contextual_thinker",
+            "disruptive_iconoclast",
+            "structural_organizer",
+            "aesthetic_artisan"
+          ]
+        },
+        "symbol": {
+          "type": "string",
+          "description": "Unicode symbol representing the agent"
+        },
+        "color": {
+          "type": "string",
+          "description": "Hex color code for visual representation",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "system_prompt": {
+          "type": "string",
+          "description": "The prompt defining agent behavior",
+          "minLength": 10
+        },
+        "traits": {
+          "type": "array",
+          "description": "List of personality traits",
+          "items": {
+            "type": "string"
+          }
+        },
+        "communication_style": {
+          "type": "string",
+          "description": "Description of communication approach"
+        }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "description": "List of agent capabilities",
+      "items": {
+        "type": "string",
+        "enum": [
+          "generate",
+          "respond",
+          "synthesize",
+          "critique",
+          "vote",
+          "moderate"
+        ]
+      },
+      "minItems": 1
+    },
+    "provider": {
+      "type": "string",
+      "description": "LLM provider identifier",
+      "enum": ["openai", "anthropic", "mock", "custom"]
+    },
+    "model": {
+      "type": "string",
+      "description": "Specific model identifier"
+    },
+    "temperature": {
+      "type": "number",
+      "description": "Sampling temperature",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional implementation-specific data",
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}
