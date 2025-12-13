@@ -96,6 +96,31 @@ def create_parser():
         help="Don't save session to disk",
     )
 
+    parser.add_argument(
+        "--theatre",
+        action="store_true",
+        help="Enable theatre mode visualization",
+    )
+
+    parser.add_argument(
+        "--format",
+        choices=["terminal", "markdown", "html"],
+        default="terminal",
+        help="Output format for theatre mode (default: terminal)",
+    )
+
+    parser.add_argument(
+        "--output",
+        type=Path,
+        help="Save theatre output to file (format auto-detected from extension or use --format)",
+    )
+
+    parser.add_argument(
+        "--no-color",
+        action="store_true",
+        help="Disable color output in theatre mode",
+    )
+
     return parser
 
 
@@ -127,9 +152,15 @@ def show_info():
     print("  - parallel: Agents respond simultaneously")
     print("  - debate: Agents engage in structured debate")
     print("  - consensus: Agents work toward agreement")
+    print("\nTheatre Mode:")
+    print("  Enable with --theatre flag to see conversations as a theatrical")
+    print("  performance with visual formatting, stage directions, and colors.")
+    print("  Save output as Markdown or HTML with --output and --format flags.")
     print("\nExample usage:")
     print('  python -m khazar_llms.cli create-task "Design a new social network"')
     print('  python -m khazar_llms.cli --mode parallel create-task "Imagine a new art form"')
+    print('  python -m khazar_llms.cli --theatre create-task "Create a new language"')
+    print('  python -m khazar_llms.cli --theatre --output theatre.html create-task "Your task"')
     print("\n" + "=" * 80 + "\n")
 
 
@@ -154,6 +185,54 @@ async def run_creative_task(args):
         max_iterations=args.iterations,
     )
 
+    # Check if theatre mode is enabled
+    if args.theatre:
+        # Import theatre mode
+        from .visualization.theatre import TheatreMode
+        
+        # Create theatre mode
+        theatre = TheatreMode(
+            ensemble=ensemble,
+            use_color=not args.no_color,
+            width=65,
+        )
+        
+        # Run the performance
+        print("\n🎭 Theatre Mode Enabled 🎭\n")
+        results = await theatre.perform(args.task)
+        
+        # Determine output format
+        output_format = args.format
+        if args.output and not args.format == "terminal":
+            # Auto-detect from extension
+            ext = args.output.suffix.lower()
+            if ext == ".md":
+                output_format = "markdown"
+            elif ext == ".html":
+                output_format = "html"
+        
+        # Display to console (terminal format)
+        if output_format == "terminal" or not args.output:
+            theatre.print_performance(
+                args.task,
+                results["conversation"],
+                metadata=results,
+            )
+        
+        # Save to file if requested
+        if args.output:
+            theatre.save(
+                args.task,
+                results["conversation"],
+                args.output,
+                format=output_format if output_format != "terminal" else "markdown",
+                metadata=results,
+            )
+            print(f"\n✨ Theatre output saved to: {args.output}")
+        
+        return
+    
+    # Original non-theatre mode behavior
     # Create session
     session = CreativeSession(
         ensemble=ensemble,
