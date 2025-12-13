@@ -145,6 +145,29 @@ class TestKPSValidator:
         result = validator.validate_message(message_data)
         assert result.valid
 
+    def test_validate_message_without_annotations(self):
+        """Test that annotations field is optional."""
+        message_data = {
+            "message_id": "550e8400-e29b-41d4-a716-446655440001",
+            "session_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+            "timestamp": "2024-12-13T14:30:00.000Z",
+            "sender": {
+                "agent_id": "dreamer-001",
+                "persona_name": "The Dreamer",
+            },
+            "content": {
+                "text": "Test message",
+            },
+            "metadata": {
+                "round": 0,
+                "turn": 0,
+                "mode": "sequential",
+            },
+        }
+        validator = KPSValidator()
+        result = validator.validate_message(message_data)
+        assert result.valid  # annotations is optional
+
     def test_validate_custom_archetype_warning(self):
         """Test that custom archetypes generate warnings."""
         agent_data = {

@@ -275,17 +275,32 @@ def protocol_export(session_file: Path, output_file: Optional[Path] = None):
         print(f"Error: Invalid JSON: {e}")
         return
     
-    # This is a simplified export - in a real scenario, we'd need the ensemble
-    # For now, just inform the user
-    print("\nExport to KPS format:")
-    print("To export a session to KPS format, use the Python API:")
-    print("\n  from khazar_llms.orchestration.session import CreativeSession")
-    print("  session = CreativeSession(ensemble)")
-    print("  results = await session.run(task)")
-    print("  kps_export = session.to_kps(results)")
-    print("  # Save kps_export to file")
-    print("\nOr run a session with --no-save and it will generate KPS-compliant output.")
-    print()
+    # Note: This is informational. Full export requires running a live session.
+    # The session.to_kps() method requires access to the ensemble object.
+    print("\n" + "=" * 80)
+    print("KPS Export Information")
+    print("=" * 80)
+    print("\nTo export a session to KPS format, you need to:")
+    print("\n1. Run a session using the Python API:")
+    print("   from khazar_llms.orchestration.session import CreativeSession")
+    print("   session = CreativeSession(ensemble)")
+    print("   results = await session.run(task)")
+    print("   kps_export = session.to_kps(results)")
+    print("\n2. Or create a session and save directly:")
+    print("   import json")
+    print("   with open('output.kps.json', 'w') as f:")
+    print("       json.dump(kps_export, f, indent=2)")
+    print("\nNote: Command-line export from saved sessions requires agent")
+    print("      reconstruction, which is planned for a future version.")
+    print("\n" + "=" * 80 + "\n")
+    
+    # Show what's in the file
+    if "session_id" in session_data:
+        print(f"Session file contains:")
+        print(f"  Session ID: {session_data.get('session_id', 'N/A')}")
+        print(f"  Task: {session_data.get('task', 'N/A')}")
+        print(f"  Messages: {len(session_data.get('conversation', []))}")
+        print()
 
 
 async def handle_protocol_command(args):
