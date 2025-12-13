@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from enum import Enum
 from typing import List, Dict, Any, Optional
 from pydantic import BaseModel, Field
-from datetime import datetime
+from datetime import datetime, timezone
 import uuid
 
 
@@ -57,7 +57,7 @@ class Message(BaseModel):
         return {
             "message_id": message_id or str(uuid.uuid4()),
             "session_id": session_id,
-            "timestamp": timestamp or datetime.utcnow().isoformat() + "Z",
+            "timestamp": timestamp or datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             "sender": {
                 "agent_id": agent_id,
                 "persona_name": self.sender,
@@ -175,7 +175,7 @@ class Agent(ABC):
             "temperature": self.temperature,
             "metadata": {
                 "version": "1.0.0",
-                "created_at": datetime.utcnow().isoformat() + "Z",
+                "created_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             },
         }
 

@@ -163,7 +163,7 @@ class KPSSession(BaseModel):
     prompt: str = Field(..., min_length=1)
     state: str
     config: SessionConfig
-    participants: List[str] = Field(..., min_items=1)
+    participants: List[str] = Field(..., min_length=1)
     created_at: str  # ISO 8601
     started_at: Optional[str] = None
     completed_at: Optional[str] = None
@@ -203,7 +203,7 @@ class KPSSynthesis(BaseModel):
     strategy: str
     synthesizer_agent_id: Optional[str] = None
     content: SynthesisContent
-    sources: List[str] = Field(..., min_items=1)
+    sources: List[str] = Field(..., min_length=1)
     metrics: Optional[SynthesisMetrics] = None
     dissenting_views: Optional[List[DissentingView]] = None
     created_at: str  # ISO 8601
