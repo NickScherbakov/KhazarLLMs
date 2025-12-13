@@ -18,6 +18,42 @@ from .metrics import (
 from .test_cases import BENCHMARK_PROMPTS, get_all_prompts
 
 
+def calculate_grade(score: float) -> str:
+    """
+    Convert numeric score to letter grade.
+    
+    Args:
+        score: Numeric score between 0 and 100
+        
+    Returns:
+        Letter grade (A+ to F)
+    """
+    if score >= 95:
+        return "A+"
+    elif score >= 90:
+        return "A"
+    elif score >= 87:
+        return "A-"
+    elif score >= 83:
+        return "B+"
+    elif score >= 80:
+        return "B"
+    elif score >= 77:
+        return "B-"
+    elif score >= 73:
+        return "C+"
+    elif score >= 70:
+        return "C"
+    elif score >= 67:
+        return "C-"
+    elif score >= 63:
+        return "D+"
+    elif score >= 60:
+        return "D"
+    else:
+        return "F"
+
+
 @dataclass
 class MetricResult:
     """Result for a single metric."""
@@ -29,34 +65,7 @@ class MetricResult:
     def __post_init__(self):
         """Calculate grade after initialization."""
         if not self.grade:
-            self.grade = self._calculate_grade()
-
-    def _calculate_grade(self) -> str:
-        """Convert score to letter grade."""
-        if self.score >= 95:
-            return "A+"
-        elif self.score >= 90:
-            return "A"
-        elif self.score >= 87:
-            return "A-"
-        elif self.score >= 83:
-            return "B+"
-        elif self.score >= 80:
-            return "B"
-        elif self.score >= 77:
-            return "B-"
-        elif self.score >= 73:
-            return "C+"
-        elif self.score >= 70:
-            return "C"
-        elif self.score >= 67:
-            return "C-"
-        elif self.score >= 63:
-            return "D+"
-        elif self.score >= 60:
-            return "D"
-        else:
-            return "F"
+            self.grade = calculate_grade(self.score)
 
 
 @dataclass
@@ -76,7 +85,7 @@ class BenchmarkResult:
             "prompt": self.prompt,
             "category": self.category,
             "overall_score": self.overall_score,
-            "overall_grade": self._get_grade(self.overall_score),
+            "overall_grade": calculate_grade(self.overall_score),
             "metrics": {
                 result.name: {
                     "score": result.score,
@@ -86,11 +95,6 @@ class BenchmarkResult:
             },
             "timestamp": self.timestamp,
         }
-
-    def _get_grade(self, score: float) -> str:
-        """Convert score to letter grade."""
-        temp_result = MetricResult(name="temp", score=score, description="")
-        return temp_result.grade
 
 
 @dataclass
@@ -107,17 +111,12 @@ class FullBenchmarkReport:
         """Get a summary of the full benchmark."""
         return {
             "overall_score": self.overall_score,
-            "overall_grade": self._get_grade(self.overall_score),
+            "overall_grade": calculate_grade(self.overall_score),
             "category_scores": self.category_scores,
             "metric_averages": self.overall_metrics,
             "num_tests": len(self.results),
             "timestamp": self.timestamp,
         }
-
-    def _get_grade(self, score: float) -> str:
-        """Convert score to letter grade."""
-        temp_result = MetricResult(name="temp", score=score, description="")
-        return temp_result.grade
 
 
 class BenchmarkEvaluator:

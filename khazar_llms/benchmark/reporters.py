@@ -5,7 +5,7 @@ from typing import Dict, Any
 from pathlib import Path
 from datetime import datetime
 
-from .evaluator import BenchmarkResult, FullBenchmarkReport, MetricResult
+from .evaluator import BenchmarkResult, FullBenchmarkReport, MetricResult, calculate_grade
 
 
 class MarkdownReporter:
@@ -32,7 +32,7 @@ class MarkdownReporter:
         md.append("|--------|-------|-------|")
         
         for metric_name, score in report.overall_metrics.items():
-            grade = MetricResult(name="temp", score=score, description="").grade
+            grade = calculate_grade(score)
             md.append(f"| {metric_name} | {score:.1f} | {grade} |")
         
         md.append("")
@@ -46,7 +46,7 @@ class MarkdownReporter:
         md.append("|----------|-------|-------|")
         
         for category, score in sorted(report.category_scores.items()):
-            grade = MetricResult(name="temp", score=score, description="").grade
+            grade = calculate_grade(score)
             md.append(f"| {category} | {score:.1f} | {grade} |")
         
         md.append("")
@@ -205,7 +205,7 @@ class HTMLReporter:
         html.append("        <tbody>")
         
         for metric_name, score in report.overall_metrics.items():
-            grade = MetricResult(name="temp", score=score, description="").grade
+            grade = calculate_grade(score)
             grade_class = HTMLReporter._grade_class(grade)
             html.append("          <tr>")
             html.append(f"            <td>{metric_name}</td>")
@@ -231,7 +231,7 @@ class HTMLReporter:
         html.append("        <tbody>")
         
         for category, score in sorted(report.category_scores.items()):
-            grade = MetricResult(name="temp", score=score, description="").grade
+            grade = calculate_grade(score)
             grade_class = HTMLReporter._grade_class(grade)
             html.append("          <tr>")
             html.append(f"            <td>{category.replace('_', ' ').title()}</td>")

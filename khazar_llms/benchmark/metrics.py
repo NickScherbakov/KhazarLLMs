@@ -21,6 +21,17 @@ except ImportError:
 from ..agents.base import Message, AgentRole
 
 
+# Constants for metric calculations
+OPTIMAL_EMERGENCE_THRESHOLD = 0.4  # 30-50% emergence is considered very good
+STOPWORDS = {
+    'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
+    'of', 'with', 'by', 'from', 'as', 'is', 'was', 'are', 'were', 'be',
+    'been', 'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will',
+    'would', 'could', 'should', 'may', 'might', 'must', 'can', 'this',
+    'that', 'these', 'those', 'i', 'you', 'he', 'she', 'it', 'we', 'they',
+}
+
+
 class Metric(ABC):
     """Base class for all benchmark metrics."""
 
@@ -193,17 +204,8 @@ class SynthesisQualityMetric(Metric):
         text = " ".join(msg.content for msg in messages).lower()
         words = re.findall(r'\w+', text)
         
-        # Filter out common words
-        stopwords = {
-            'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
-            'of', 'with', 'by', 'from', 'as', 'is', 'was', 'are', 'were', 'be',
-            'been', 'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will',
-            'would', 'could', 'should', 'may', 'might', 'must', 'can', 'this',
-            'that', 'these', 'those', 'i', 'you', 'he', 'she', 'it', 'we', 'they',
-        }
-        
         # Keep words longer than 4 characters and not stopwords
-        concepts = {w for w in words if len(w) > 4 and w not in stopwords}
+        concepts = {w for w in words if len(w) > 4 and w not in STOPWORDS}
         return concepts
 
 
@@ -309,8 +311,8 @@ class EmergenceMetric(Metric):
         # Combine both metrics
         emergence = (concept_emergence * 0.6 + bigram_emergence * 0.4)
         
-        # Scale: 30-50% emergence is very good
-        normalized = min(1.0, emergence / 0.4)
+        # Scale: 30-50% emergence is very good (using OPTIMAL_EMERGENCE_THRESHOLD)
+        normalized = min(1.0, emergence / OPTIMAL_EMERGENCE_THRESHOLD)
         
         return min(100.0, max(0.0, normalized * 100))
 
@@ -319,15 +321,7 @@ class EmergenceMetric(Metric):
         text = " ".join(msg.content for msg in messages).lower()
         words = re.findall(r'\w+', text)
         
-        stopwords = {
-            'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
-            'of', 'with', 'by', 'from', 'as', 'is', 'was', 'are', 'were', 'be',
-            'been', 'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will',
-            'would', 'could', 'should', 'may', 'might', 'must', 'can', 'this',
-            'that', 'these', 'those', 'i', 'you', 'he', 'she', 'it', 'we', 'they',
-        }
-        
-        concepts = {w for w in words if len(w) > 4 and w not in stopwords}
+        concepts = {w for w in words if len(w) > 4 and w not in STOPWORDS}
         return concepts
 
     def _extract_bigrams(self, messages: List[Message]) -> set:

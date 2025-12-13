@@ -4,7 +4,7 @@ from typing import List, Optional
 from pathlib import Path
 
 from ..orchestration.ensemble import Ensemble
-from .evaluator import BenchmarkEvaluator, FullBenchmarkReport
+from .evaluator import BenchmarkEvaluator, FullBenchmarkReport, calculate_grade
 from .reporters import MarkdownReporter, JSONReporter, HTMLReporter
 from .test_cases import get_categories
 
@@ -119,15 +119,13 @@ class BenchmarkRunner:
         print("\nMetric Breakdown:")
         print("-" * 80)
         for metric_name, score in report.overall_metrics.items():
-            from .evaluator import MetricResult
-            grade = MetricResult(name="temp", score=score, description="").grade
+            grade = calculate_grade(score)
             print(f"  {metric_name:.<50} {score:>6.1f} ({grade})")
         
         print("\nCategory Performance:")
         print("-" * 80)
         for category, score in sorted(report.category_scores.items()):
-            from .evaluator import MetricResult
-            grade = MetricResult(name="temp", score=score, description="").grade
+            grade = calculate_grade(score)
             category_name = category.replace('_', ' ').title()
             print(f"  {category_name:.<50} {score:>6.1f} ({grade})")
         
