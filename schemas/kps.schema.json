@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://khazarllms.org/schemas/kps.schema.json",
+  "title": "Khazar Protocol Specification (KPS) - Combined Schema",
+  "description": "Complete schema for Khazar Protocol Specification v1.0.0-draft",
+  "definitions": {
+    "agent": {
+      "$ref": "agent.schema.json"
+    },
+    "message": {
+      "$ref": "message.schema.json"
+    },
+    "session": {
+      "$ref": "session.schema.json"
+    },
+    "synthesis": {
+      "$ref": "synthesis.schema.json"
+    },
+    "event": {
+      "type": "object",
+      "required": ["event_type", "timestamp", "session_id"],
+      "properties": {
+        "event_type": {
+          "type": "string",
+          "enum": [
+            "session.initialized",
+            "session.started",
+            "agent.joined",
+            "agent.left",
+            "turn.started",
+            "turn.completed",
+            "round.started",
+            "round.completed",
+            "synthesis.started",
+            "synthesis.completed",
+            "session.paused",
+            "session.resumed",
+            "session.completed",
+            "session.terminated",
+            "error.occurred"
+          ]
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "session_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "data": {
+          "type": "object"
+        }
+      }
+    },
+    "error": {
+      "type": "object",
+      "required": ["code", "message", "timestamp"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^KPS-[0-9]{3}$",
+          "description": "KPS error code"
+        },
+        "message": {
+          "type": "string",
+          "description": "Human-readable error message"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "session_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "context": {
+          "type": "object",
+          "description": "Additional error context"
+        },
+        "recovery_suggestion": {
+          "type": "string",
+          "description": "Suggested recovery action"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1.0.0-draft",
+      "description": "KPS version"
+    }
+  }
+}

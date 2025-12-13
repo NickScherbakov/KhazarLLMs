@@ -30,6 +30,29 @@ In the Khazar Dictionary, truth emerges not from a single perspective but from t
 - 💾 **Session Management** - Save and review creative sessions
 - 🎨 **Provider Agnostic** - Works with OpenAI, Anthropic, or mock mode
 - 🛠️ **CLI & Python API** - Use via command line or integrate into your code
+- 📜 **KPS Compliant** - Follows the Khazar Protocol Specification for interoperability
+
+## 📜 Khazar Protocol Specification (KPS)
+
+KhazarLLMs implements and serves as the **reference implementation** for the **Khazar Protocol Specification (KPS)** - an open standard for multi-agent creative collaboration.
+
+**What is KPS?**
+- A formal protocol defining how AI agents communicate and collaborate
+- Standard message formats, agent personas, and session management
+- JSON schemas for validation and interoperability
+- Extension mechanisms for custom implementations
+
+**Why KPS Matters:**
+- First open standard for multi-agent creative systems
+- Enables session portability between implementations
+- Promotes best practices in ensemble AI design
+- Positions KhazarLLMs as an industry standard setter
+
+**Learn More:**
+- 📖 Read the full [Protocol Specification](PROTOCOL.md)
+- 🔧 See the [Implementation Guide](docs/PROTOCOL.md)
+- ✅ Validate KPS compliance: `python -m khazar_llms.cli protocol validate <file>`
+- 📊 Export sessions to KPS format via Python API
 
 ## 🚀 Quick Start
 

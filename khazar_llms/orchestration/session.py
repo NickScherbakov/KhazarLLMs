@@ -4,6 +4,7 @@ import json
 from datetime import datetime
 from typing import List, Dict, Any, Optional
 from pathlib import Path
+import uuid
 
 from ..agents.base import Message
 from .ensemble import Ensemble
@@ -145,3 +146,82 @@ class CreativeSession:
         print(f"Messages: {len(session_data.get('conversation', []))}")
         print(f"Duration: {session_data.get('duration_seconds', 0):.2f} seconds")
         print("=" * 80 + "\n")
+
+    def to_kps(
+        self,
+        session_data: Dict[str, Any],
+        session_id: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """
+        Convert session to KPS-compliant export format.
+        
+        Args:
+            session_data: Session results from run()
+            session_id: Optional session ID (uses session_id from data if not provided)
+            
+        Returns:
+            KPS-compliant session export dictionary
+        """
+        sid = session_id or session_data.get("session_id", str(uuid.uuid4()))
+        
+        # Build agent list
+        agents = []
+        agent_id_map = {}
+        for i, agent in enumerate(self.ensemble.agents):
+            agent_id = f"{agent.role.value}-{i+1:03d}"
+            agent_id_map[agent.name] = agent_id
+            agents.append(agent.to_kps(agent_id=agent_id))
+        
+        # Build message list
+        messages = []
+        for i, msg in enumerate(session_data.get("conversation", [])):
+            agent_id = agent_id_map.get(msg.sender, msg.sender)
+            turn = i % len(self.ensemble.agents)
+            
+            # Infer intent based on role
+            intent_map = {
+                "Dreamer": "propose",
+                "Critic": "challenge",
+                "Synthesizer": "synthesize",
+                "Philosopher": "question",
+                "Rebel": "challenge",
+                "Architect": "synthesize",
+                "Poet": "propose",
+            }
+            intent = intent_map.get(msg.sender, "propose")
+            
+            kps_msg = msg.to_kps(
+                session_id=sid,
+                agent_id=agent_id,
+                mode=session_data.get("mode", "sequential"),
+                turn=turn,
+                intent=intent,
+            )
+            messages.append(kps_msg)
+        
+        # Build session config
+        session_config = {
+            "session_id": sid,
+            "prompt": session_data.get("task", ""),
+            "state": "COMPLETED" if "end_time" in session_data else "ACTIVE",
+            "config": {
+                "mode": session_data.get("mode", "sequential"),
+                "max_rounds": session_data.get("iterations", 5),
+                "synthesis_strategy": "final_agent",
+            },
+            "participants": list(agent_id_map.values()),
+            "created_at": session_data.get("start_time", datetime.utcnow().isoformat() + "Z"),
+            "started_at": session_data.get("start_time"),
+            "completed_at": session_data.get("end_time"),
+            "metadata": {
+                "version": "1.0.0",
+                "duration_seconds": session_data.get("duration_seconds"),
+            },
+        }
+        
+        return {
+            "version": "1.0.0-draft",
+            "session": session_config,
+            "agents": agents,
+            "messages": messages,
+        }
