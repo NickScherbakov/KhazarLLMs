@@ -37,4 +37,4 @@ asyncio_mode = "auto"
 testpaths = ["tests"]
 
 [tool.setuptools]
-packages = ["khazar_llms", "khazar_llms.agents", "khazar_llms.orchestration", "khazar_llms.utils", "khazar_llms.visualization"]
+packages = ["khazar_llms", "khazar_llms.agents", "khazar_llms.orchestration", "khazar_llms.utils", "khazar_llms.visualization", "khazar_llms.benchmark"]
