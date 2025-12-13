@@ -1,5 +1,6 @@
 """Visual styles and themes for theatre mode."""
 
+import random
 from typing import Dict, Any
 from enum import Enum
 
@@ -57,7 +58,6 @@ class StageDirection:
     @classmethod
     def get_exit(cls, agent_name: str) -> str:
         """Get an exit direction for an agent."""
-        import random
         template = random.choice(cls.TEMPLATES["exit"])
         return template.format(name=agent_name)
 

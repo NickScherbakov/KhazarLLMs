@@ -200,9 +200,11 @@ def test_html_escape():
     
     output = formatter.format_session("Task", messages)
     
-    # Should escape HTML
+    # Should escape malicious HTML in content
     assert "&lt;script&gt;" in output
-    assert "<script>" not in output or "theatre-container" in output  # Only in CSS/HTML structure
+    # The string '<script>' might appear in HTML structure (like in <style> tags)
+    # But the malicious content should be escaped
+    assert "alert('xss')" not in output or "&lt;script&gt;alert(&#39;xss&#39;)&lt;/script&gt;" in output
 
 
 @pytest.mark.asyncio

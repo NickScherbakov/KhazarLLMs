@@ -12,6 +12,102 @@ from .styles import (
 )
 
 
+# CSS for HTML output - defined once at module level
+THEATRE_CSS = """
+body {
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.theatre-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.theatre-header {
+    text-align: center;
+    border-bottom: 3px double #ffd700;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.theatre-header h1 {
+    color: #ffd700;
+    font-size: 2.5em;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.theatre-header h2 {
+    color: #f0f0f0;
+    font-size: 1.3em;
+    margin: 10px 0 0;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.metadata {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+.metadata span {
+    margin: 0 15px;
+}
+
+.stage {
+    margin-top: 30px;
+}
+
+.stage-direction {
+    text-align: center;
+    font-style: italic;
+    color: #888;
+    margin: 30px 0;
+    font-size: 0.95em;
+}
+
+.dialogue {
+    margin: 25px 0;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.dialogue.dreamer { border-left-color: #ff6ec7; }
+.dialogue.critic { border-left-color: #ffd93d; }
+.dialogue.synthesizer { border-left-color: #6bcfff; }
+.dialogue.philosopher { border-left-color: #6fa8dc; }
+.dialogue.rebel { border-left-color: #ff6b6b; }
+.dialogue.architect { border-left-color: #7fdb6b; }
+.dialogue.poet { border-left-color: #da6bff; }
+
+.speaker {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #ffd700;
+}
+
+.speech {
+    padding-left: 15px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+"""
+
+
 class TerminalFormatter:
     """Format theatre output for terminal display."""
     
@@ -262,7 +358,7 @@ class HTMLFormatter:
         lines.append("    <meta name='viewport' content='width=device-width, initial-scale=1.0'>")
         lines.append("    <title>Khazar Theatre</title>")
         lines.append("    <style>")
-        lines.append(self._get_css())
+        lines.append(THEATRE_CSS)
         lines.append("    </style>")
         lines.append("</head>")
         lines.append("<body>")
@@ -334,99 +430,3 @@ class HTMLFormatter:
             .replace('"', "&quot;")
             .replace("'", "&#39;")
         )
-    
-    def _get_css(self) -> str:
-        """Get embedded CSS for the HTML output."""
-        return """
-        body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #f0f0f0;
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        
-        .theatre-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-        
-        .theatre-header {
-            text-align: center;
-            border-bottom: 3px double #ffd700;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .theatre-header h1 {
-            color: #ffd700;
-            font-size: 2.5em;
-            margin: 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        .theatre-header h2 {
-            color: #f0f0f0;
-            font-size: 1.3em;
-            margin: 10px 0 0;
-            font-weight: normal;
-            font-style: italic;
-        }
-        
-        .metadata {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 0.9em;
-            color: #aaa;
-        }
-        
-        .metadata span {
-            margin: 0 15px;
-        }
-        
-        .stage {
-            margin-top: 30px;
-        }
-        
-        .stage-direction {
-            text-align: center;
-            font-style: italic;
-            color: #888;
-            margin: 30px 0;
-            font-size: 0.95em;
-        }
-        
-        .dialogue {
-            margin: 25px 0;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid;
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .dialogue.dreamer { border-left-color: #ff6ec7; }
-        .dialogue.critic { border-left-color: #ffd93d; }
-        .dialogue.synthesizer { border-left-color: #6bcfff; }
-        .dialogue.philosopher { border-left-color: #6fa8dc; }
-        .dialogue.rebel { border-left-color: #ff6b6b; }
-        .dialogue.architect { border-left-color: #7fdb6b; }
-        .dialogue.poet { border-left-color: #da6bff; }
-        
-        .speaker {
-            font-weight: bold;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            color: #ffd700;
-        }
-        
-        .speech {
-            padding-left: 15px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-        """
