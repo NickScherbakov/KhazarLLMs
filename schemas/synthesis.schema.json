@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://khazarllms.org/schemas/synthesis.schema.json",
+  "title": "KPS Synthesis Schema",
+  "description": "Khazar Protocol Specification - Synthesis Output Format",
+  "type": "object",
+  "required": ["synthesis_id", "session_id", "strategy", "content", "sources", "created_at"],
+  "properties": {
+    "synthesis_id": {
+      "type": "string",
+      "description": "Unique identifier for this synthesis",
+      "format": "uuid"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Parent session reference",
+      "format": "uuid"
+    },
+    "strategy": {
+      "type": "string",
+      "description": "Strategy used for synthesis",
+      "enum": ["final_agent", "voting", "merge", "iterative"]
+    },
+    "synthesizer_agent_id": {
+      "type": "string",
+      "description": "Agent that created this synthesis"
+    },
+    "content": {
+      "type": "object",
+      "required": ["text"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The synthesis content"
+        },
+        "format": {
+          "type": "string",
+          "description": "Content format",
+          "enum": ["plain", "markdown", "structured"],
+          "default": "plain"
+        },
+        "language": {
+          "type": "string",
+          "description": "ISO 639-1 language code",
+          "pattern": "^[a-z]{2}$",
+          "default": "en"
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "Source message IDs used in synthesis",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "minItems": 1
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Quality metrics for the synthesis",
+      "properties": {
+        "agreement_score": {
+          "type": "number",
+          "description": "Level of agreement among agents",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "diversity_score": {
+          "type": "number",
+          "description": "Diversity of perspectives included",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "coherence_score": {
+          "type": "number",
+          "description": "Logical coherence of synthesis",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    },
+    "dissenting_views": {
+      "type": "array",
+      "description": "Minority perspectives not fully incorporated",
+      "items": {
+        "type": "object",
+        "required": ["agent_id", "message_id", "summary"],
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "description": "Agent with dissenting view"
+          },
+          "message_id": {
+            "type": "string",
+            "description": "Message containing the view",
+            "format": "uuid"
+          },
+          "summary": {
+            "type": "string",
+            "description": "Brief summary of the dissenting view"
+          }
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "description": "ISO 8601 timestamp",
+      "format": "date-time"
+    }
+  }
+}
