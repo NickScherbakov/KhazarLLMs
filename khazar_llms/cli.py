@@ -9,7 +9,9 @@ Usage:
 
 import argparse
 import asyncio
+import json
 from pathlib import Path
+from typing import Optional
 
 from .agents.personas import (
     DreamerAgent,
@@ -44,14 +46,20 @@ def create_parser():
 
     parser.add_argument(
         "command",
-        choices=["create-task", "list-agents", "info"],
+        choices=["create-task", "list-agents", "info", "protocol"],
         help="Command to execute",
     )
 
     parser.add_argument(
         "task",
         nargs="?",
-        help="The creative task for the ensemble (required for create-task)",
+        help="The creative task for the ensemble (required for create-task) or subcommand for protocol",
+    )
+
+    parser.add_argument(
+        "file",
+        nargs="?",
+        help="File path for protocol commands (validate, export)",
     )
 
     parser.add_argument(
@@ -156,12 +164,151 @@ def show_info():
     print("  Enable with --theatre flag to see conversations as a theatrical")
     print("  performance with visual formatting, stage directions, and colors.")
     print("  Save output as Markdown or HTML with --output and --format flags.")
+    print("\nProtocol Commands:")
+    print("  python -m khazar_llms.cli protocol info - Show KPS information")
+    print("  python -m khazar_llms.cli protocol validate <file> - Validate KPS file")
+    print("  python -m khazar_llms.cli protocol export <session-file> - Export to KPS format")
     print("\nExample usage:")
     print('  python -m khazar_llms.cli create-task "Design a new social network"')
     print('  python -m khazar_llms.cli --mode parallel create-task "Imagine a new art form"')
     print('  python -m khazar_llms.cli --theatre create-task "Create a new language"')
     print('  python -m khazar_llms.cli --theatre --output theatre.html create-task "Your task"')
     print("\n" + "=" * 80 + "\n")
+
+
+def protocol_info():
+    """Show information about KPS."""
+    print("\n" + "=" * 80)
+    print("KHAZAR PROTOCOL SPECIFICATION (KPS)")
+    print("=" * 80 + "\n")
+    print("Version: 1.0.0-draft")
+    print("\nThe Khazar Protocol Specification defines a standard for multi-agent")
+    print("creative collaboration using LLMs. KPS enables interoperability between")
+    print("implementations and provides a formal protocol for agent communication.")
+    print("\nKey Features:")
+    print("  - Standard agent personas and archetypes")
+    print("  - Message format for agent communication")
+    print("  - Session lifecycle management")
+    print("  - Multiple orchestration modes")
+    print("  - Synthesis strategies for combining perspectives")
+    print("\nStandard Archetypes:")
+    print("  - creative_visionary (Dreamer)")
+    print("  - analytical_challenger (Critic)")
+    print("  - integrative_harmonizer (Synthesizer)")
+    print("  - contextual_thinker (Philosopher)")
+    print("  - disruptive_iconoclast (Rebel)")
+    print("  - structural_organizer (Architect)")
+    print("  - aesthetic_artisan (Poet)")
+    print("\nFor full specification, see PROTOCOL.md in repository root.")
+    print("\nKhazarLLMs is the reference implementation of KPS.")
+    print("=" * 80 + "\n")
+
+
+def protocol_validate(filepath: Path):
+    """Validate a file against KPS specification."""
+    from .protocol import KPSValidator
+    
+    if not filepath.exists():
+        print(f"Error: File not found: {filepath}")
+        return
+    
+    try:
+        with open(filepath, "r") as f:
+            data = json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"Error: Invalid JSON: {e}")
+        return
+    
+    print(f"\nValidating {filepath} against KPS specification...\n")
+    
+    validator = KPSValidator()
+    
+    # Determine what type of data this is
+    if "session" in data and "agents" in data and "messages" in data:
+        result = validator.validate_session_export(data)
+        data_type = "Session Export"
+    elif "session_id" in data and "config" in data:
+        result = validator.validate_session(data)
+        data_type = "Session"
+    elif "message_id" in data and "sender" in data:
+        result = validator.validate_message(data)
+        data_type = "Message"
+    elif "agent_id" in data and "persona" in data:
+        result = validator.validate_agent(data)
+        data_type = "Agent"
+    elif "synthesis_id" in data:
+        result = validator.validate_synthesis(data)
+        data_type = "Synthesis"
+    else:
+        print("Error: Could not determine data type")
+        return
+    
+    print(f"Data Type: {data_type}")
+    print(f"Status: {'✓ VALID' if result.valid else '✗ INVALID'}")
+    
+    if result.errors:
+        print(f"\nErrors ({len(result.errors)}):")
+        for error in result.errors:
+            print(f"  - {error}")
+    
+    if result.warnings:
+        print(f"\nWarnings ({len(result.warnings)}):")
+        for warning in result.warnings:
+            print(f"  - {warning}")
+    
+    if result.valid and not result.warnings:
+        print("\n✓ File is fully KPS-compliant!")
+    
+    print()
+
+
+def protocol_export(session_file: Path, output_file: Optional[Path] = None):
+    """Export a session to KPS format."""
+    if not session_file.exists():
+        print(f"Error: File not found: {session_file}")
+        return
+    
+    try:
+        with open(session_file, "r") as f:
+            session_data = json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"Error: Invalid JSON: {e}")
+        return
+    
+    # This is a simplified export - in a real scenario, we'd need the ensemble
+    # For now, just inform the user
+    print("\nExport to KPS format:")
+    print("To export a session to KPS format, use the Python API:")
+    print("\n  from khazar_llms.orchestration.session import CreativeSession")
+    print("  session = CreativeSession(ensemble)")
+    print("  results = await session.run(task)")
+    print("  kps_export = session.to_kps(results)")
+    print("  # Save kps_export to file")
+    print("\nOr run a session with --no-save and it will generate KPS-compliant output.")
+    print()
+
+
+async def handle_protocol_command(args):
+    """Handle protocol subcommands."""
+    subcommand = args.task
+    
+    if subcommand == "info":
+        protocol_info()
+    elif subcommand == "validate":
+        if not args.file:
+            print("Error: File path required for validate command")
+            print("Usage: python -m khazar_llms.cli protocol validate <file>")
+            return
+        protocol_validate(Path(args.file))
+    elif subcommand == "export":
+        if not args.file:
+            print("Error: File path required for export command")
+            print("Usage: python -m khazar_llms.cli protocol export <session-file>")
+            return
+        protocol_export(Path(args.file))
+    else:
+        print(f"Unknown protocol subcommand: {subcommand}")
+        print("Available subcommands: info, validate, export")
 
 
 async def run_creative_task(args):
@@ -283,6 +430,8 @@ def main():
         list_agents()
     elif args.command == "info":
         show_info()
+    elif args.command == "protocol":
+        asyncio.run(handle_protocol_command(args))
     elif args.command == "create-task":
         asyncio.run(run_creative_task(args))
 
