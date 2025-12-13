@@ -26,8 +26,9 @@ def test_agent_identity():
     assert "symbol" in identity
     assert "color" in identity
     assert "display_name" in identity
-    assert identity["symbol"] == AgentSymbol.DREAMER
+    assert identity["symbol"] == "🌙"  # Check the actual value
     assert identity["display_name"] == "Dreamer"
+    assert isinstance(identity["color"], str)  # Color should be a string (ANSI code)
 
 
 def test_create_box():

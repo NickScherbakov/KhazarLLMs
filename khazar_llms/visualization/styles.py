@@ -73,9 +73,13 @@ def get_agent_identity(role: str) -> Dict[str, Any]:
     """
     role_upper = role.upper()
     
+    # Get the enum values, with fallback defaults
+    symbol_enum = getattr(AgentSymbol, role_upper, None)
+    color_enum = getattr(AgentColor, role_upper, None)
+    
     identity = {
-        "symbol": getattr(AgentSymbol, role_upper, "🎭"),
-        "color": getattr(AgentColor, role_upper, AgentColor.RESET),
+        "symbol": symbol_enum.value if symbol_enum else "🎭",
+        "color": color_enum.value if color_enum else AgentColor.RESET.value,
         "display_name": role.replace("_", " ").title(),
     }
     
