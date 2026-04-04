@@ -17,7 +17,6 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "rich>=13.0.0",
     "colorama>=0.4.6",
-    "asyncio>=3.4.3",
 ]
 
 [project.optional-dependencies]
